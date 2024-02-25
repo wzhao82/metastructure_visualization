@@ -89,7 +89,7 @@ var g_mvpMatrix = new Matrix4();
 var g_normalMatrix = new Matrix4();
 var modelDrawInfo = [];
 var configs={
-    lookConfig:[5.0, 5.0, -3.0, 5.0, 5.0, 7.0,  0.0, 1.0, 0],
+    lookConfig:[0.0, 0.0, 3.0, 0.0, 0.0, 0.0,  0.0, 1.0, 0],
     lightColor:new Float32Array(3),
     backgroundColor:new Uint8Array(4),
     tempColorList:new Float32Array(3*MAX_OBJECT),
@@ -357,119 +357,35 @@ function main() {
     // TextureArray[0]={ifTexture:0.0,TextureUrl:'none',n:0};
     // updateDrawInfo(0,[0.0,90.0,0.0, 0.0,6.0,0.0, 0.75,0.4,0.5,  0.5,0.5,0.5,1,0 ,1]);
 
-    //大椅子
-    // create a string to be './models/{option1}.obj' and let it be global variable
-    var chair2 = './models/' + window.item1 + '.obj';
-    readOBJFile(chair2, modelObject,  mtlArray, objArray, 0.045, false, 0);
-    TextureArray[0]={ifTexture:1.0,TextureUrl:window.textureValue,n:6};
-    updateDrawInfo(0,[0.0,90.0,0.0,  -8.5,-2.5,-2,  1.0,1.0,1.0,  0.5,0.5,0.5,1,0 ,1]);
-
-
-    //房间
-    // readOBJFile('./models/cube.obj', modelObject,  mtlArray, objArray, 20, false, 0);
-    // TextureArray[0]={ifTexture:0.0,TextureUrl:'none',n:0};
-    // updateDrawInfo(0,[0.0,90.0,0.0, 0.0,6.0,0.0, 0.75,0.4,0.5,  0.5,0.5,0.5,1,0 ,1]);
-
-    // //饮水机
-    // //readOBJFile('./models/033_2.obj', modelObject,  mtlArray, objArray, 0.08, false, 1);
-    // TextureArray[1]={ifTexture:1.0,TextureUrl:'./textTures/lastics1.jpg',n:0};
-    // updateDrawInfo(1,[0.0,0.0,0.0, 1,-2.0,-12.3, 1.0,1.0,1.0,  0.5,0.5,0.5,1,0 ,1]);
-
-    // // 饮水机水桶，透明的部分
-    // readOBJFile('./models/033_1.obj', modelObject,  mtlArray, objArray, 0.08, false, 12);
-    // TextureArray[12]={ifTexture:0.0,TextureUrl:'none',n:0};
-    // updateDrawInfo(12,[0.0,0.0,0.0, 1,-2.0,-12.3, 1.0,1.0,1.0, 0.0,0.26,0.38,0.7,1 ,1]);
-
-    // //柜子高
-    // //readOBJFile('./models/051.obj', modelObject,  mtlArray, objArray, 0.1, false, 2);
-    // TextureArray[2]={ifTexture:0.0,TextureUrl:'./textTures/2048_2.jpg',n:3};
-    // updateDrawInfo(2,[0.0,-90.0,0.0, 8.9,-2.0,-10.0, 1.0,1.0,1.0,  0.1,0.7235,0.4529,1,0 ,1]);
-
-    // //柜子矮
-    // //readOBJFile('./models/052.obj', modelObject,  mtlArray, objArray, 0.1, false, 3);
-    // TextureArray[3]={ifTexture:0.0,TextureUrl:'none',n:2};
-    // updateDrawInfo(3,[0.0,-90.0,0.0, 8.9,-2.0,-6.4, 1,1.0,1,  0.1,0.7235,0.4529,0,0 ,1]);
-
-    // //矮桌子
-    // readOBJFile('./models/unit-gyroid2.obj', modelObject,  mtlArray, objArray, 0.04, false, 4);
-    // TextureArray[4]={ifTexture:1.0,TextureUrl:'none',n:3};
-    // updateDrawInfo(4,[0.0,-90.0,0.0, -4.5,-2,-2.0, 1.0,1.3,1.0,  0.02,0.88,0.99,0.9,1 ,1]);
-
-    // //大书桌
-    // //readOBJFile('./models/table4.obj', modelObject,  mtlArray, objArray, 0.0042, false, 5);
-    // TextureArray[5]={ifTexture:1.0,TextureUrl:'./textTures/wood11.jpg',n:4};
-    // updateDrawInfo(5,[0.0,90.0,0.0, -3.5,-2,4.5, 1.0,1.0,0.9,  0.5,0.5,0.5,1,0 ,1]);
-
-    // //桌边柜子
-    // //readOBJFile('./models/054.obj', modelObject,  mtlArray, objArray, 0.11, false, 6);
-    // TextureArray[6]={ifTexture:1.0,TextureUrl:'./textTures/wood2.jpg',n:5};
-    // updateDrawInfo(6,[0.0,0.0,0.0, -8.9,-2,4.5, 1.0,1.0,1.0,  0.5,0.5,0.5,1,0 ,1]);
-
     // //大椅子
-    // //readOBJFile('./models/chair2.obj', modelObject,  mtlArray, objArray, 0.045, false, 7);
-    // TextureArray[7]={ifTexture:1.0,TextureUrl:'./textTures/wood2.jpg',n:6};
-    // updateDrawInfo(7,[0.0,90.0,0.0,  -8.5,-2.5,-2,  1.0,1.0,1.0,  0.5,0.5,0.5,1,0 ,1]);
+    // // create a string to be './models/{option1}.obj' and let it be global variable
+    // var chair2 = './models/' + window.item1 + '.obj';
+    // readOBJFile(chair2, modelObject,  mtlArray, objArray, 0.045, false, 0);
+    // TextureArray[0]={ifTexture:1.0,TextureUrl:window.textureValue,n:6};
+    // updateDrawInfo(0,[0.0,90.0,0.0,  -8.5,-2.5,-2,  1.0,1.0,1.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    // //书架子
-    // readOBJFile('./models/unit-gyroid2.obj', modelObject,  mtlArray, objArray, 0.005, false, 8);
-    // TextureArray[8]={ifTexture:1.0,TextureUrl:'repeat',n:4};
-    // updateDrawInfo(8,[0.0,180.0,0.0,  10,-2.5,3.5,  1.0,1.0,1.0,  0.5,0.5,0.5,1,0 ,1]);
+    var x0 = 0.0
+    var z0 = 0.0
 
-    // //红蓝椅
-    // readOBJFile('./models/chair3.obj', modelObject,  mtlArray, objArray, 0.005, false, 9);
-    // TextureArray[9]={ifTexture:0.0,TextureUrl:'none',n:8};
-    // updateDrawInfo(9,[0.0,-90.0,0.0, -3.5,-2,8.5,  1.0,1.0,1.0,  0.5,0.5,0.5,1,0 ,1]);
+    readOBJFile('./models/unit-kelvin.obj', modelObject,  mtlArray, objArray, 0.005, false, 0);
+    TextureArray[0]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    updateDrawInfo(0,[0.0,0.0,0.0,  x0,0.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    // readOBJFile('./models/com_1.obj', modelObject,  mtlArray, objArray, 0.006, false, 10);
-    // TextureArray[10]={ifTexture:0.0,TextureUrl:'none',n:5};
-    // updateDrawInfo(10,[0.0,0.0,0.0, -3.5,1,4.5, 1.0,1.0,1,  0.5,0.5,0.5,1,0 ,1]);
+    readOBJFile('./models/unit-kelvin.obj', modelObject,  mtlArray, objArray, 0.005, false, 1);//plate
+    TextureArray[1]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    updateDrawInfo(1,[0.0,0.0,0.0,  x0,0.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    // readOBJFile('./models/044.obj', modelObject,  mtlArray, objArray, 0.080, false, 11);
-    // TextureArray[11]={ifTexture:0.0,TextureUrl:'none',n:5};
-    // updateDrawInfo(11,[-12.0,0.0,0.0, -3.5,3.2,4.5, 1.1,1,1,  0.5,0.5,0.5,1,0 ,1]);
+    readOBJFile('./models/unit-diamond.obj', modelObject,  mtlArray, objArray, 0.005, false, 2);
+    TextureArray[2]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    updateDrawInfo(2,[0.0,0.0,0.0,  x0,1.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    // //电脑屏幕
-    // readOBJFile('./models/pad.obj', modelObject,  mtlArray, objArray, 0.08, false, 13);
-    // TextureArray[13]={ifTexture:0.0,TextureUrl:'./textTures/2048.jpg',n:1};
-    // updateDrawInfo(13,[-12.0,0.0,0.0, -3.5,3.235,4.5, 1.1,1,1,  0,0,0,1,1 ,1]);
+    readOBJFile('./models/unit-kelvin.obj', modelObject,  mtlArray, objArray, 0.005, false, 3);//plate
+    TextureArray[3]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    updateDrawInfo(3,[0.0,0.0,0.0,  x0,1.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    // //密码箱子
-    // readOBJFile('./models/0273.obj', modelObject,  mtlArray, objArray, 0.020, false, 14);
-    // TextureArray[14]={ifTexture:0.0,TextureUrl:'none',n:7};
-    // updateDrawInfo(14,[0.0,0.0,0.0,-4.5,-2.3,-5.9, 1.1,1,1,  0.3,0.2,0.1,1,1 ,1]);
-
-    // //二维码1
-    // readOBJFile('./models/paper1.obj', modelObject,  mtlArray, objArray, 0.1, false, 15);
-    // TextureArray[15]={ifTexture:1.0,TextureUrl:'./textTures/6427.jpg',n:2};
-    // updateDrawInfo(15,[90.0,0.0,0.0,-8.4,0.02,-4.6, 1,1,0.1,  0.3,0.2,0.1,1,1 ,1]);
-
-    // //二维码2
-    // readOBJFile('./models/paper2.obj', modelObject,  mtlArray, objArray, 0.1, false, 16);
-    // TextureArray[16]={ifTexture:1.0,TextureUrl:'repeat',n:2};
-    // updateDrawInfo(16,[90.0,0.0,0.0, 1,2.8,-11.7, 1,1,0.1,  0.3,0.2,0.1,1,1 ,1]);
-
-    // //二维码3
-    // readOBJFile('./models/paper3.obj', modelObject,  mtlArray, objArray, 0.1, false, 17);
-    // TextureArray[17]={ifTexture:1.0,TextureUrl:'repeat',n:2};
-    // updateDrawInfo(17,[90.0,0.0,0.0, 8.7,-1.5,-6.6, 1,1,0.1,  0.3,0.2,0.1,1,1 ,1]);
-
-    // //二维码4
-    // readOBJFile('./models/paper4.obj', modelObject,  mtlArray, objArray, 1.5, false, 18);
-    // TextureArray[18]={ifTexture:0.0,TextureUrl:'repeat',n:2};
-    // updateDrawInfo(18,[0.0,0.0,0.0,  -7.95,-1.95,6.20, 1,1,0.5,  0,0,0,0,1 ,1]);
-
-    // readOBJFile('./models/cube.obj', modelObject,  mtlArray, objArray, 1, false, 19);
-    // TextureArray[19]={ifTexture:0.0,TextureUrl:'none',n:2};
-    // updateDrawInfo(19,[0.0,-90.0,0.0, 10.95,-2.00,-6.40, 1,5.0,1,  0.2,0.2,0.2,1,1 ,1]);
-
-    // readOBJFile('./models/lamp.obj', modelObject,  mtlArray, objArray, 0.003, false, 20);
-    // TextureArray[20]={ifTexture:1.0,TextureUrl:'repeat',n:0};
-    // updateDrawInfo(20,[0.0,-90.0,0.0, -8,-2.0,-14.3, 1,0.8,1,  0.2,0.2,0.2,1,1 ,1]);
-
-    // readOBJFile('./models/lamp.obj', modelObject,  mtlArray, objArray, 0.003, false, 21);
-    // TextureArray[21]={ifTexture:1.0,TextureUrl:'repeat',n:0};
-    // updateDrawInfo(21,[0.0,-90.0,0.0, -8,-2,14.3, 1,0.8,1,  0.2,0.2,0.2,1,1 ,1]);
-    // //1.0代表加载纹理，0.0代表不加载纹理
+    readOBJFile('./models/unit-gyroid.obj', modelObject,  mtlArray, objArray, 0.005, false, 4);
+    TextureArray[4]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    updateDrawInfo(4,[0.0,0.0,0.0,  x0,2.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
     initEventHandlers(canvas, configs.angle, gl, viewProjMatrix, model);
 
@@ -498,13 +414,11 @@ function main() {
 
 var useFul=[13,14,15,16,17,18,3,19,4];
 
-//中心控制器
+
 function initEventHandlers(canvas, currentAngle, gl, viewProjMatrix, model) {
     var dragging = false;         // Dragging or not
     var lastX = -1, lastY = -1;   // Last position of the mouse
     var circleX = 314,currentX=0;
-
-    var forwardInterval,backInterval,leftInterval,rightInterval;
 
     canvas.onmousedown = function(ev) {   // Mouse is pressed
         var x = ev.clientX, y = ev.clientY;
@@ -536,215 +450,24 @@ function initEventHandlers(canvas, currentAngle, gl, viewProjMatrix, model) {
             var dx = factor * (x - lastX);
             var dy = factor * (y - lastY);
 
-            currentX+=dx*4;
-//                while(currentX<-314)currentX+=618;
+            //currentX+=dx*4;
+            // configs.lookConfig[3]=Math.sin(currentX/circleX) * 10 + configs.lookConfig[0];
+            // configs.lookConfig[5]=Math.cos(currentX/circleX) * 10 + configs.lookConfig[2];
 
-//                console.log("currentX",currentX,configs.lookConfig);
-
-            configs.lookConfig[3]=Math.sin(currentX/circleX) * 10 + configs.lookConfig[0];
-            configs.lookConfig[5]=Math.cos(currentX/circleX) * 10 + configs.lookConfig[2];
-
-            configs.lookConfig[4]+=dy*0.4;
-//                configs.lookConfig[5]+=dy;
-//                console.log("lookConfig",configs.lookConfig);
+            // configs.lookConfig[4]+=dy*0.4;
+            configs.lookConfig[0] += dx*0.4;
+            //configs.lookConfig[1] -= dy;
+            // var zFactor = 5 / canvas.height; // Control the sensitivity of z-axis movement, adjust as needed
+            // configs.lookConfig[2] += dy * zFactor;             
             viewProjMatrix.setPerspective(30.0, canvas.width/canvas.height, 1.0, 5000.0);
             viewProjMatrix.lookAt(...(configs.lookConfig));
-
-            // Limit x-axis rotation angle to -90 to 90 degrees
-            currentAngle[0] = Math.max(Math.min(currentAngle[0] + dy, 90.0), -90.0);
-            currentAngle[1] = currentAngle[1] + dx;
+            // // Limit x-axis rotation angle to -90 to 90 degrees
+            // currentAngle[0] = Math.max(Math.min(currentAngle[0] + dy, 90.0), -90.0);
+            // currentAngle[1] = currentAngle[1] + dx;
         }
         lastX = x;
         lastY = y;
     };
-
-    function judgePositionX(x,y){
-        console.log("Math.abs(x)",Math.abs(x));
-        if(Math.abs(x)>=7.9)return false;
-
-        return true;
-    }
-    function judgePositionZ(x,z){
-        console.log("Math.abs(z)",Math.abs(z));
-
-        if(Math.abs(z)>=13.9)return false;
-
-        return true;
-    }
-
-    // function GoToBack(speed){
-    //     clearInterval(forwardInterval);
-    //     clearInterval(backInterval);
-    //     tobackward.style.opacity="1";
-    //     backInterval=setInterval(function(){
-    //         configs.lookConfig[0] -= Math.sin(currentX / circleX) * speed;
-    //         configs.lookConfig[2] -= Math.cos(currentX / circleX) * speed;
-    //         configs.lookConfig[3] -= Math.sin(currentX/circleX)*speed;
-    //         configs.lookConfig[5] -= Math.cos(currentX/circleX)*speed;
-    //         if(!judgePositionX(configs.lookConfig[0],configs.lookConfig[2])) {
-    //             configs.lookConfig[0] += Math.sin(currentX / circleX) * speed;
-    //             configs.lookConfig[3] += Math.sin(currentX/circleX)*speed;
-    //         }
-    //         if(!judgePositionZ(configs.lookConfig[0],configs.lookConfig[2])){
-    //             configs.lookConfig[2] += Math.cos(currentX / circleX) * speed;
-    //             configs.lookConfig[5] += Math.cos(currentX/circleX)*speed;
-    //         }
-    //         viewProjMatrix.setPerspective(30.0, canvas.width/canvas.height, 1.0, 5000.0);
-    //         viewProjMatrix.lookAt(...(configs.lookConfig));
-    //     },15);
-    // }
-
-    // function GoForward(speed){
-    //     clearInterval(forwardInterval);
-    //     clearInterval(backInterval);
-    //     toahead.style.opacity="1";
-    //     forwardInterval=setInterval(function(){
-    //         configs.lookConfig[0] += Math.sin(currentX / circleX) * speed;
-    //         configs.lookConfig[2] += Math.cos(currentX / circleX) * speed;
-    //         configs.lookConfig[3] += Math.sin(currentX/circleX)*speed;
-    //         configs.lookConfig[5] += Math.cos(currentX/circleX)*speed;
-    //         if(!judgePositionX(configs.lookConfig[0],configs.lookConfig[2])) {
-    //             configs.lookConfig[0] -= Math.sin(currentX / circleX) * speed;
-    //             configs.lookConfig[3] -= Math.sin(currentX/circleX)*speed;
-    //         }
-    //         if(!judgePositionZ(configs.lookConfig[0],configs.lookConfig[2])){
-    //             configs.lookConfig[2] -= Math.cos(currentX / circleX) * speed;
-    //             configs.lookConfig[5] -= Math.cos(currentX/circleX)*speed;
-    //         }
-    //         viewProjMatrix.setPerspective(30.0, canvas.width/canvas.height, 1.0, 5000.0);
-    //         viewProjMatrix.lookAt(...(configs.lookConfig));
-    //     },15);
-    // }
-
-    // function GoLeft(speed){
-    //     clearInterval(rightInterval);
-    //     clearInterval(leftInterval);
-    //     toleft.style.opacity="1";
-    //     leftInterval=setInterval(function(){
-    //         configs.lookConfig[0]+=Math.cos(currentX/circleX)*speed;
-    //         configs.lookConfig[2]-=Math.sin(currentX/circleX)*speed;
-    //         configs.lookConfig[3]+=Math.cos(currentX/circleX)*speed;
-    //         configs.lookConfig[5]-=Math.sin(currentX/circleX)*speed;
-    //         if(!judgePositionX(configs.lookConfig[0],configs.lookConfig[2])) {
-    //             configs.lookConfig[0]-=Math.cos(currentX/circleX)*speed;
-    //             configs.lookConfig[3]-=Math.cos(currentX/circleX)*speed;
-
-    //             configs.lookConfig[2]+=Math.sin(currentX/circleX)*speed;
-    //             configs.lookConfig[5]+=Math.sin(currentX/circleX)*speed;
-    //         }
-    //         viewProjMatrix.setPerspective(30.0, canvas.width/canvas.height, 1.0, 5000.0);
-    //         viewProjMatrix.lookAt(...(configs.lookConfig));
-    //     },15);
-    // }
-
-    // function GoRight(speed){
-    //     clearInterval(rightInterval);
-    //     clearInterval(leftInterval);
-    //     toright.style.opacity="1";
-    //     rightInterval=setInterval(function(){
-    //         configs.lookConfig[0]-=Math.cos(currentX/circleX)*speed;
-    //         configs.lookConfig[2]+=Math.sin(currentX/circleX)*speed;
-    //         configs.lookConfig[3]-=Math.cos(currentX/circleX)*speed;
-    //         configs.lookConfig[5]+=Math.sin(currentX/circleX)*speed;
-    //         if(!judgePositionX(configs.lookConfig[0],configs.lookConfig[2])) {
-    //             configs.lookConfig[0]+=Math.cos(currentX/circleX)*speed;
-    //             configs.lookConfig[3]+=Math.cos(currentX/circleX)*speed;
-    //         }
-    //         if(!judgePositionZ(configs.lookConfig[0],configs.lookConfig[2])){
-    //             configs.lookConfig[2]-=Math.sin(currentX/circleX)*speed;
-    //             configs.lookConfig[5]-=Math.sin(currentX/circleX)*speed;
-    //         }
-    //         viewProjMatrix.setPerspective(30.0, canvas.width/canvas.height, 1.0, 5000.0);
-    //         viewProjMatrix.lookAt(...(configs.lookConfig));
-    //     },15);
-    // }
-
-    var speed=0.5;
-
-    function addEvents(events, eF) {
-        if (this != window)
-            for (let i = 0; i < events.length; i++) {
-                this.addEventListener(events[i], eF);
-            }
-    }
-
-    // toleft.onmousedown=function(e){
-    //     GoLeft(speed);
-    // };
-
-    // addEvents.call(toleft,["mouseout","mouseup"],function(e){
-    //     clearInterval(leftInterval);
-    //     toleft.style.opacity="0.5";
-    // });
-
-    // toahead.onmousedown=function(e){
-    //     GoForward(speed);
-    // };
-
-    // addEvents.call(toahead,["mouseout","mouseup"],function(e){
-    //     clearInterval(forwardInterval);
-    //     toahead.style.opacity="0.5";
-    // });
-
-    // toright.onmousedown=function(e){
-    //     GoRight(speed);
-    // };
-
-    // addEvents.call(toright,["mouseout","mouseup"],function(e){
-    //     clearInterval(rightInterval);
-    //     toright.style.opacity="0.5";
-    // });
-
-    // tobackward.onmousedown=function(e){
-    //     GoToBack(speed);
-    // };
-    // addEvents.call(tobackward,["mouseout","mouseup"],function(e){
-    //     clearInterval(backInterval);
-    //     tobackward.style.opacity="0.5";
-    // });
-
-    // window.onkeydown=function(e){
-    //     switch (e.keyCode){
-    //         case 87:
-    //             GoForward(speed);
-    //             break;
-    //         case 83:
-    //             GoToBack(speed);
-    //             break;
-    //         case 65:
-    //             GoLeft(speed);
-    //             break;
-    //         case 68:
-    //             GoRight(speed);
-    //             break;
-    //     }
-    // };
-
-    // window.onkeyup=function(e){
-
-    //     console.log("onkeyup",e.keyCode);
-    //     switch (e.keyCode){
-
-    //         case 87:
-    //             clearInterval(forwardInterval);
-    //             toahead.style.opacity="0.5";
-    //             break;
-    //         case 83:
-    //             clearInterval(backInterval);
-    //             tobackward.style.opacity="0.5";
-    //             break;
-
-    //         case 65:
-    //             clearInterval(leftInterval);
-    //             toleft.style.opacity="0.5";
-    //             break;
-    //         case 68:
-    //             clearInterval(rightInterval);
-    //             toright.style.opacity="0.5";
-    //             break;
-    //     }
-    // };
-
 }
 
 // Create an buffer object and perform an initial configuration
@@ -776,7 +499,7 @@ function createEmptyArrayBuffer(gl, a_attribute, num, type) {
     return buffer;
 }
 
-//这里面的n应该是标号，只不过暂时没有用到
+//n have note been used
 function initTextures(gl,thisTexture) {
     console.log(gl,"image to onload ..",gl);
     var texture = gl.createTexture();   // Create a texture object
@@ -842,18 +565,14 @@ function initDraw(gl){
     gl.uniform1f(gl.program.u_If_Fog,If_Fog);
 }
 
-// 描画関数
 function draw(gl, program, angle, viewProjMatrix, model, index, TextureArray, if_click_test) {
 
-    if(!modelDrawInfo[index].ifShow) return;  //如果这个模型被设置成不显示，那么就不显示
+    if(!modelDrawInfo[index].ifShow) return;  //Show or noshow
 
-    //没加载好
     if(!mtlArray[index] || !objArray[index]){
         console.log("no object!!!");
         return;
     }
-
-    //先计算是不是要绘制
 
     var positionToObject = [modelDrawInfo[index].offsetX-configs.lookConfig[0],modelDrawInfo[index].offsetY-configs.lookConfig[1],modelDrawInfo[index].offsetZ-configs.lookConfig[2]];
     var positionToPoint = [configs.lookConfig[3]-configs.lookConfig[0],configs.lookConfig[4]-configs.lookConfig[1],configs.lookConfig[5]-configs.lookConfig[2]];
@@ -866,17 +585,14 @@ function draw(gl, program, angle, viewProjMatrix, model, index, TextureArray, if
 
     if(multiresult<50 && index!=0)return;
 
-    //设置纹理
     if(TextureArray[index].ifTexture==1.0){
         var u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
         gl.uniform1i(u_Sampler, TextureArray[index].n);
     }
 
-    //计算顶点数目
     var numIndices = 0;
     for(var i = 0; i < modelObject[index].objects.length; i++){
         numIndices += modelObject[index].objects[i].numIndices;
-        //每一个objects[i].numIndices 是它的所有的face的顶点数加起来
     }
 
     gl.uniform4f(gl.program.u_tempColor,configs.tempColorList[index*3],configs.tempColorList[index*3+1],configs.tempColorList[index*3+2],1);
@@ -890,7 +606,7 @@ function draw(gl, program, angle, viewProjMatrix, model, index, TextureArray, if
         g_objDoc = null;
 
         g_modelMatrix.setTranslate(modelDrawInfo[index].offsetX,modelDrawInfo[index].offsetY,modelDrawInfo[index].offsetZ);
-        g_modelMatrix.rotate(modelDrawInfo[index].rotateX, 1.0, 0.0, 0.0); // 设置模型旋转矩阵
+        g_modelMatrix.rotate(modelDrawInfo[index].rotateX, 1.0, 0.0, 0.0);
         g_modelMatrix.rotate(modelDrawInfo[index].rotateY, 0.0, 1.0, 0.0);
         g_modelMatrix.rotate(modelDrawInfo[index].rotateZ, 0.0, 0.0, 1.0);
         g_modelMatrix.scale(modelDrawInfo[index].scaleX,modelDrawInfo[index].scaleY,modelDrawInfo[index].scaleZ);
@@ -915,10 +631,10 @@ function draw(gl, program, angle, viewProjMatrix, model, index, TextureArray, if
 
 }
 
-//返回的是被点击的物体的编号,0代表没有物体被点击
+//return the chosen object
 function checkPixel(gl, viewProjMatrix, model, x, y){
     //window.cancelAnimationFrame(animationID);
-    //调试用
+    //debug
 
     var picked = false;
 
@@ -930,37 +646,15 @@ function checkPixel(gl, viewProjMatrix, model, x, y){
     }
 
     gl.readPixels(x,y,1,1,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
-    console.log("点击信息:",parseInt((pixels[0]/(255/MAX_OBJECT)).toFixed(0)),x,y,pixels);
+    console.log("click information:",parseInt((pixels[0]/(255/MAX_OBJECT)).toFixed(0)),x,y,pixels);
 
-    //先判断是否是背景色,然后如果选上判断是哪一个物体
+    //if there is background, which object 
 
     gl.uniform1f(gl.program.u_Clicked,0.0);
 
     return (parseInt((pixels[0]/(255/MAX_OBJECT)).toFixed(0)));
 
 }
-
-//以下是加载进度代码
-
-// var MTLNUMBER=5;
-// var OBJNUMBER=17;
-
-
-// var processing = setInterval(function(){
-//     var objOK=0;
-
-//     for(ii=0;ii<22;ii++){
-//         if(!!objArray[ii])objOK++;
-//     }
-
-//     var percentage = ((objOK+mtlOK)/(MTLNUMBER+OBJNUMBER)*100).toFixed(2);
-//     getById("percentage").innerHTML="加载中..."+percentage+"%";
-
-//     if((objOK+mtlOK)>(MTLNUMBER+OBJNUMBER-1)){
-//         getById("processing").style.display="none";
-//         clearInterval(processing);
-//     }
-// },10);
 
 function getById(value){
     return document.getElementById(value);
