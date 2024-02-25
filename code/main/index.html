@@ -29,7 +29,7 @@
     <img src="images/backward.png" id="tobackward">
     <img src="images/right.png" id="toright">
 </div> -->
-<div id="sidebar">
+<!-- <div id="sidebar">
     <h2>Control Panel</h2>
     <div>
       <label for="rangeInput">Adjust Range:</label>
@@ -40,19 +40,96 @@
       <input type="text" id="textInput" placeholder="Type here...">
     </div>
     <div>
-        <label for="choiceSelect">Choose an Option:</label>
+        <label for="choiceSelect">Choose a material:</label>
         <select id="choiceSelect">
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
-          <option value="option4">Option 4</option>
+          <option value="metal1">Metal 1</option>
+          <option value="metal2">Metal 2</option>
+          <option value="wood1">Wood 1</option>
+          <option value="wood2">Wood 2</option>
         </select>
       </div>
       
     <button id="submitBtn">Submit</button>
-</div>
+</div> -->
+<!-- Multiple Choice Dropdown -->
+<select id="textureChoice">
+    <option value="metal1">Metal 1</option>
+    <option value="metal2">Metal 2</option>
+    <option value="wood1">Wood 1</option>
+    <option value="wood2">Wood 2</option>
+  </select>
+  
 
+  <form id="questionnaire">
+    <!-- Question 1 -->
+    <div>
+        <p>Question 1:</p>
+        <label><input type="radio" name="question1" value="a"> Option A</label>
+        <label><input type="radio" name="question1" value="b"> Option B</label>
+        <label><input type="radio" name="question1" value="c"> Option C</label>
+        <label><input type="radio" name="question1" value="d"> Option D</label>
+    </div>
+    
+    <!-- Repeat for questions 2 through 8 -->
 
+    <div>
+        <p>Question 2:</p>
+        <label><input type="radio" name="question2" value="a"> Option A</label>
+        <label><input type="radio" name="question2" value="b"> Option B</label>
+        <label><input type="radio" name="question2" value="c"> Option C</label>
+        <label><input type="radio" name="question2" value="d"> Option D</label>
+    </div>
+
+    <div>
+        <p>Question 3:</p>
+        <label><input type="radio" name="question3" value="a"> Option A</label>
+        <label><input type="radio" name="question3" value="b"> Option B</label>
+        <label><input type="radio" name="question3" value="c"> Option C</label>
+        <label><input type="radio" name="question3" value="d"> Option D</label>
+    </div>
+
+    <div>
+        <p>Question 4:</p>
+        <label><input type="radio" name="question4" value="a"> Option A</label>
+        <label><input type="radio" name="question4" value="b"> Option B</label>
+        <label><input type="radio" name="question4" value="c"> Option C</label>
+        <label><input type="radio" name="question4" value="d"> Option D</label>
+    </div>
+
+    <div>
+        <p>Question 5:</p>
+        <label><input type="radio" name="question5" value="a"> Option A</label>
+        <label><input type="radio" name="question5" value="b"> Option B</label>
+        <label><input type="radio" name="question5" value="c"> Option C</label>
+        <label><input type="radio" name="question5" value="d"> Option D</label>
+    </div>
+
+    <div>
+        <p>Question 6:</p>
+        <label><input type="radio" name="question6" value="a"> Option A</label>
+        <label><input type="radio" name="question6" value="b"> Option B</label>
+        <label><input type="radio" name="question6" value="c"> Option C</label>
+        <label><input type="radio" name="question6" value="d"> Option D</label>
+    </div>
+
+    <div>
+        <p>Question 7:</p>
+        <label><input type="radio" name="question7" value="a"> Option A</label>
+        <label><input type="radio" name="question7" value="b"> Option B</label>
+        <label><input type="radio" name="question7" value="c"> Option C</label>
+        <label><input type="radio" name="question7" value="d"> Option D</label>
+    </div>
+
+    <div>
+        <p>Question 8:</p>
+        <label><input type="radio" name="question8" value="a"> Option A</label>
+        <label><input type="radio" name="question8" value="b"> Option B</label>
+        <label><input type="radio" name="question8" value="c"> Option C</label>
+        <label><input type="radio" name="question8" value="d"> Option D</label>
+    </div>
+
+    <button type="button" id="submitBtn">Submit</button>
+</form>
 
 <script id="shader-vs" type="x-shader/x-vertex">
     attribute vec4 a_Position;

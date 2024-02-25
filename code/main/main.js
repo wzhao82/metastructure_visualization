@@ -11,16 +11,61 @@
 // var toright = document.getElementById('toright');
 // script.js
 // Update in script.js
+// window.textureValue = './textTures/metal1.jpg';
+// document.getElementById('submitBtn').addEventListener('click', function() {
+//     var rangeValue = document.getElementById('rangeInput').value;
+//     var textValue = document.getElementById('textInput').value;
+//     var choiceValue = document.getElementById('choiceSelect').value;
+
+// // define a string to be './textTures/{choiceValue}.jpg' and let it be global variable, default value is './textTures/texture1.jpg'
+//     window.textureValue = choiceValue ? `./textTures/${choiceValue}.jpg` : './textTures/metal1.jpg';
+//     console.log('Range Value:', rangeValue);
+//     console.log('Text Value:', textValue);
+//     console.log('Choice Value:', choiceValue);
+//   });
+// Initialize with default value
+window.textureValue = './textTures/metal1.jpg';
+
+// Function to update textureValue
+function updateTextureValue() {
+    var choiceValue = document.getElementById('textureChoice').value;
+    window.textureValue = `./textTures/${choiceValue}.jpg`;
+    console.log('Texture Path:', window.textureValue);
+    main()
+}
+
+// Event listener for the dropdown changes
+document.getElementById('textureChoice').addEventListener('change', updateTextureValue);
+
+// Call updateTextureValue initially to set to default value explicitly if needed
+updateTextureValue();
+
+for (let i = 1; i <= 8; i++) {
+    window[`item${i}`] = 'chair2';
+};
 document.getElementById('submitBtn').addEventListener('click', function() {
-    var rangeValue = document.getElementById('rangeInput').value;
-    var textValue = document.getElementById('textInput').value;
-    var choiceValue = document.getElementById('choiceSelect').value;
-    
-    console.log('Range Value:', rangeValue);
-    console.log('Text Value:', textValue);
-    console.log('Choice Value:', choiceValue);
-  });
-  
+    // Loop through each question
+    for (let i = 1; i <= 8; i++) {
+        // Get selected option for each question
+        const selectedOption = document.querySelector(`input[name="question${i}"]:checked`)?.value;
+        
+        // Check if an option was selected
+        if (selectedOption) {
+            // Store the result in the format "./models/{option}.obj"
+            window[`item${i}`] = selectedOption;
+        } else {
+            // Handle case where no option was selected (optional)
+            console.log(`No option selected for question ${i}`);
+        }
+    }
+
+    // Optionally, log the results to verify
+    for (let i = 1; i <= 8; i++) {
+        console.log(`item${i}:`, window[`item${i}`]);
+    }
+    main();
+});
+
 
 /***************全局变量****************/
 
@@ -53,7 +98,7 @@ var configs={
     lightP:new Float32Array(3),
 };
 configs.lightP =[-15,0,-5];
-configs.backgroundColor=[0.2, 0.2, 0.2, 1.0];
+configs.backgroundColor=[1.0, 1.0, 1.0, 1.0];
 configs.lightColor = [0.4, 0.4, 0.4];
 for(var ii=0; ii<MAX_OBJECT; ii++){
     configs.tempColorList[ii*3] = (Math.floor(255/MAX_OBJECT)/255).toFixed(2) * (ii+1);
@@ -294,7 +339,7 @@ function main() {
 
     // 投影行列計算
     var viewProjMatrix = new Matrix4();
-    viewProjMatrix.setPerspective(30.0, canvas.width/canvas.height, 1.0, 5000.0);
+    viewProjMatrix.setPerspective(40.0, canvas.width/canvas.height, 1.0, 5000.0);
     viewProjMatrix.lookAt(...(configs.lookConfig));
 
     // Start reading the OBJ file
@@ -308,9 +353,18 @@ function main() {
 //        updateDrawInfo(1,[0.0,0.0,0.0, -20,0.0,-50.0, 1.0,1.0,1.0]);
 
     //每一个新的模型要改变：第一行最后参数编号，第二行索引，最后编号，第三行索引
-    readOBJFile('./models/cube.obj', modelObject,  mtlArray, objArray, 20, false, 0);
-    TextureArray[0]={ifTexture:0.0,TextureUrl:'none',n:0};
-    updateDrawInfo(0,[0.0,90.0,0.0, 0.0,6.0,0.0, 0.75,0.4,0.5,  0.5,0.5,0.5,1,0 ,1]);
+    // readOBJFile('./models/cube.obj', modelObject,  mtlArray, objArray, 20, false, 0);
+    // TextureArray[0]={ifTexture:0.0,TextureUrl:'none',n:0};
+    // updateDrawInfo(0,[0.0,90.0,0.0, 0.0,6.0,0.0, 0.75,0.4,0.5,  0.5,0.5,0.5,1,0 ,1]);
+
+    //大椅子
+    // create a string to be './models/{option1}.obj' and let it be global variable
+    var chair2 = './models/' + window.item1 + '.obj';
+    readOBJFile(chair2, modelObject,  mtlArray, objArray, 0.045, false, 0);
+    TextureArray[0]={ifTexture:1.0,TextureUrl:window.textureValue,n:6};
+    updateDrawInfo(0,[0.0,90.0,0.0,  -8.5,-2.5,-2,  1.0,1.0,1.0,  0.5,0.5,0.5,1,0 ,1]);
+
+
     //房间
     // readOBJFile('./models/cube.obj', modelObject,  mtlArray, objArray, 20, false, 0);
     // TextureArray[0]={ifTexture:0.0,TextureUrl:'none',n:0};
