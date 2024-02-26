@@ -329,6 +329,7 @@ function main() {
     // updateDrawInfo(0,[0.0,90.0,0.0, 0.0,6.0,0.0, 0.75,0.4,0.5,  0.5,0.5,0.5,1,0 ,1]);
 
     var x0 = 0.0
+    var y0 = 0.0
     var z0 = 0.0
     var increment = 0.5
 
@@ -349,12 +350,14 @@ function main() {
             TextureArray[i]={ifTexture:1.0,TextureUrl:window.textureValue,n:i};
             updateDrawInfo(i,[0.0,0.0,0.0, locations[i][0],locations[i][1],locations[i][2], 10.0,10.0,10.0, 0.5,0.5,0.5,1,0 ,1]);
         }
+        configs.lookConfig = [0.5, 0.25, 0.5, 0.5, 0.25, 0.25,  0.0, 1.0, 0];
     } else {
         for (var i = 0; i < 8; i++) {
             readOBJFile(`./models/${window[`item${i+1}`]}.obj`, modelObject,  mtlArray, objArray, 0.005, false, i);
             TextureArray[i]={ifTexture:1.0,TextureUrl:window.textureValue,n:i};
-            updateDrawInfo(i,[0.0,0.0,0.0, x0,0.0+(i*increment),z0, 10.0,10.0,10.0, 0.5,0.5,0.5,1,0 ,1]);
+            updateDrawInfo(i,[0.0,0.0,0.0, x0,y0,z0+(i*increment), 10.0,10.0,10.0, 0.5,0.5,0.5,1,0 ,1]);
         }
+        configs.lookConfig = [x0, y0, z0, x0, y0, z0+2,  0.0, 1.0, 0];
     }
 
     // var filename = './models/' + window.item1 + '.obj';
