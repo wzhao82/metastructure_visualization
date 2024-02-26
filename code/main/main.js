@@ -430,8 +430,8 @@ function initEventHandlers(canvas, currentAngle, gl, viewProjMatrix, model) {
             // configs.lookConfig[0]=Math.sin(currentX/circleX) * 10 + configs.lookConfig[0];
             // configs.lookConfig[2]=Math.cos(currentX/circleX) * 10 + configs.lookConfig[2];
 
-            configs.lookConfig[0]=Math.sin(currentX/circleX) * 10 ;
-            configs.lookConfig[2]=Math.cos(currentX/circleX) * 10 ;
+            configs.lookConfig[0]=Math.cos(currentX/circleX) * 10 ;
+            configs.lookConfig[2]=Math.sin(currentX/circleX) * 10 ;
 
             configs.lookConfig[1]+=dy*0.4;
             // configs.lookConfig[0] += dx*0.4;
