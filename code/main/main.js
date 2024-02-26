@@ -3,65 +3,28 @@
  * All right reserved
  * IF you have any question please email onlythen@yeah.net
  */ 
+
 /***************dom元素****************/
-
-// var toleft = document.getElementById('toleft');
-// var toahead = document.getElementById('toahead');
-// var tobackward = document.getElementById('tobackward');
-// var toright = document.getElementById('toright');
-// script.js
-// Update in script.js
-// window.textureValue = './textTures/metal1.jpg';
-// document.getElementById('submitBtn').addEventListener('click', function() {
-//     var rangeValue = document.getElementById('rangeInput').value;
-//     var textValue = document.getElementById('textInput').value;
-//     var choiceValue = document.getElementById('choiceSelect').value;
-
-// // define a string to be './textTures/{choiceValue}.jpg' and let it be global variable, default value is './textTures/texture1.jpg'
-//     window.textureValue = choiceValue ? `./textTures/${choiceValue}.jpg` : './textTures/metal1.jpg';
-//     console.log('Range Value:', rangeValue);
-//     console.log('Text Value:', textValue);
-//     console.log('Choice Value:', choiceValue);
-//   });
 // Initialize with default value
 window.textureValue = './textTures/metal1.jpg';
-
-// Function to update textureValue
 function updateTextureValue() {
     var choiceValue = document.getElementById('textureChoice').value;
     window.textureValue = `./textTures/${choiceValue}.jpg`;
-    console.log('Texture Path:', window.textureValue);
     main()
 }
-
-// Event listener for the dropdown changes
 document.getElementById('textureChoice').addEventListener('change', updateTextureValue);
-
-// Call updateTextureValue initially to set to default value explicitly if needed
 updateTextureValue();
 
 for (let i = 1; i <= 8; i++) {
-    window[`item${i}`] = 'chair2';
+    window[`item${i}`] = 'unit-diamond';
 };
 document.getElementById('submitBtn').addEventListener('click', function() {
-    // Loop through each question
+    // Loop through each location
     for (let i = 1; i <= 8; i++) {
-        // Get selected option for each question
-        const selectedOption = document.querySelector(`input[name="question${i}"]:checked`)?.value;
-        
-        // Check if an option was selected
+        const selectedOption = document.querySelector(`input[name="location${i}"]:checked`)?.value;
         if (selectedOption) {
-            // Store the result in the format "./models/{option}.obj"
             window[`item${i}`] = selectedOption;
-        } else {
-            // Handle case where no option was selected (optional)
-            console.log(`No option selected for question ${i}`);
         }
-    }
-
-    // Optionally, log the results to verify
-    for (let i = 1; i <= 8; i++) {
-        console.log(`item${i}:`, window[`item${i}`]);
     }
     main();
 });
@@ -89,7 +52,7 @@ var g_mvpMatrix = new Matrix4();
 var g_normalMatrix = new Matrix4();
 var modelDrawInfo = [];
 var configs={
-    lookConfig:[0.0, 0.0, 3.0, 0.0, 0.0, 0.0,  0.0, 1.0, 0],
+    lookConfig:[0.0, 2.0, 3.0, 0.0, 2.0, 0.0,  0.0, 1.0, 0],
     lightColor:new Float32Array(3),
     backgroundColor:new Uint8Array(4),
     tempColorList:new Float32Array(3*MAX_OBJECT),
@@ -98,7 +61,7 @@ var configs={
     lightP:new Float32Array(3),
 };
 configs.lightP =[-15,0,-5];
-configs.backgroundColor=[1.0, 1.0, 1.0, 1.0];
+configs.backgroundColor=[0.9, 0.9, 0.9, 1.0];
 configs.lightColor = [0.4, 0.4, 0.4];
 for(var ii=0; ii<MAX_OBJECT; ii++){
     configs.tempColorList[ii*3] = (Math.floor(255/MAX_OBJECT)/255).toFixed(2) * (ii+1);
@@ -357,35 +320,48 @@ function main() {
     // TextureArray[0]={ifTexture:0.0,TextureUrl:'none',n:0};
     // updateDrawInfo(0,[0.0,90.0,0.0, 0.0,6.0,0.0, 0.75,0.4,0.5,  0.5,0.5,0.5,1,0 ,1]);
 
-    // //大椅子
-    // // create a string to be './models/{option1}.obj' and let it be global variable
-    // var chair2 = './models/' + window.item1 + '.obj';
-    // readOBJFile(chair2, modelObject,  mtlArray, objArray, 0.045, false, 0);
-    // TextureArray[0]={ifTexture:1.0,TextureUrl:window.textureValue,n:6};
-    // updateDrawInfo(0,[0.0,90.0,0.0,  -8.5,-2.5,-2,  1.0,1.0,1.0,  0.5,0.5,0.5,1,0 ,1]);
-
     var x0 = 0.0
     var z0 = 0.0
 
-    readOBJFile('./models/unit-kelvin.obj', modelObject,  mtlArray, objArray, 0.005, false, 0);
+    var filename = './models/' + window.item1 + '.obj';
+    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 0);
     TextureArray[0]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
     updateDrawInfo(0,[0.0,0.0,0.0,  x0,0.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    readOBJFile('./models/unit-kelvin.obj', modelObject,  mtlArray, objArray, 0.005, false, 1);//plate
+    filename = './models/' + window.item2 + '.obj';
+    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 1);//plate
     TextureArray[1]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
     updateDrawInfo(1,[0.0,0.0,0.0,  x0,0.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    readOBJFile('./models/unit-diamond.obj', modelObject,  mtlArray, objArray, 0.005, false, 2);
+    filename = './models/' + window.item3 + '.obj';
+    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 2);
     TextureArray[2]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
     updateDrawInfo(2,[0.0,0.0,0.0,  x0,1.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    readOBJFile('./models/unit-kelvin.obj', modelObject,  mtlArray, objArray, 0.005, false, 3);//plate
+    filename = './models/' + window.item4 + '.obj';
+    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 3);//plate
     TextureArray[3]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
     updateDrawInfo(3,[0.0,0.0,0.0,  x0,1.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    readOBJFile('./models/unit-gyroid.obj', modelObject,  mtlArray, objArray, 0.005, false, 4);
+    filename = './models/' + window.item5 + '.obj';
+    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 4);
     TextureArray[4]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
     updateDrawInfo(4,[0.0,0.0,0.0,  x0,2.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+
+    filename = './models/' + window.item6 + '.obj';
+    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 5);
+    TextureArray[5]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    updateDrawInfo(5,[0.0,0.0,0.0,  x0,2.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+
+    filename = './models/' + window.item7 + '.obj';
+    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 6);
+    TextureArray[6]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    updateDrawInfo(6,[0.0,0.0,0.0,  x0,3.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+
+    filename = './models/' + window.item8 + '.obj';
+    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 7);
+    TextureArray[7]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    updateDrawInfo(7,[0.0,0.0,0.0,  x0,3.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
     initEventHandlers(canvas, configs.angle, gl, viewProjMatrix, model);
 
@@ -450,12 +426,15 @@ function initEventHandlers(canvas, currentAngle, gl, viewProjMatrix, model) {
             var dx = factor * (x - lastX);
             var dy = factor * (y - lastY);
 
-            //currentX+=dx*4;
-            // configs.lookConfig[3]=Math.sin(currentX/circleX) * 10 + configs.lookConfig[0];
-            // configs.lookConfig[5]=Math.cos(currentX/circleX) * 10 + configs.lookConfig[2];
+            currentX+=dx*4;
+            // configs.lookConfig[0]=Math.sin(currentX/circleX) * 10 + configs.lookConfig[0];
+            // configs.lookConfig[2]=Math.cos(currentX/circleX) * 10 + configs.lookConfig[2];
 
-            // configs.lookConfig[4]+=dy*0.4;
-            configs.lookConfig[0] += dx*0.4;
+            configs.lookConfig[0]=Math.sin(currentX/circleX) * 10 ;
+            configs.lookConfig[2]=Math.cos(currentX/circleX) * 10 ;
+
+            configs.lookConfig[1]+=dy*0.4;
+            // configs.lookConfig[0] += dx*0.4;
             //configs.lookConfig[1] -= dy;
             // var zFactor = 5 / canvas.height; // Control the sensitivity of z-axis movement, adjust as needed
             // configs.lookConfig[2] += dy * zFactor;             

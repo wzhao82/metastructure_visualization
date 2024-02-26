@@ -19,39 +19,10 @@
 <!-- <div id="processing" style="width: 100%;height: 100%;background: rgba(0,0,0,0.5);position: fixed;display: flex">
     <p style="display: flex;margin: auto;width: 200px;height: 100px;color:white;font-size: 24px;" id="percentage">加载中...</p>
 </div> -->
-<canvas id="webgl" width="1440" height="820">
-    Please use a browser that supports "canvas"
-</canvas>
 
-<!-- <div class="control">
-    <img src="images/left.png" id="toleft">
-    <img src="images/ahead.png" id="toahead">
-    <img src="images/backward.png" id="tobackward">
-    <img src="images/right.png" id="toright">
-</div> -->
-<!-- <div id="sidebar">
-    <h2>Control Panel</h2>
-    <div>
-      <label for="rangeInput">Adjust Range:</label>
-      <input type="range" id="rangeInput" min="0" max="100" value="50">
-    </div>
-    <div>
-      <label for="textInput">Enter Text:</label>
-      <input type="text" id="textInput" placeholder="Type here...">
-    </div>
-    <div>
-        <label for="choiceSelect">Choose a material:</label>
-        <select id="choiceSelect">
-          <option value="metal1">Metal 1</option>
-          <option value="metal2">Metal 2</option>
-          <option value="wood1">Wood 1</option>
-          <option value="wood2">Wood 2</option>
-        </select>
-      </div>
-      
-    <button id="submitBtn">Submit</button>
-</div> -->
 <!-- Multiple Choice Dropdown -->
+<p> ------------------------------------------------------------- </p>
+<label for="textureChoice">Select a material:</label>
 <select id="textureChoice">
     <option value="metal1">Metal 1</option>
     <option value="metal2">Metal 2</option>
@@ -59,77 +30,85 @@
     <option value="wood2">Wood 2</option>
   </select>
   
+<p> ------------------------------------------------------------- </p>
 
   <form id="questionnaire">
-    <!-- Question 1 -->
+    <!-- Location 1 -->
     <div>
-        <p>Question 1:</p>
-        <label><input type="radio" name="question1" value="a"> Option A</label>
-        <label><input type="radio" name="question1" value="b"> Option B</label>
-        <label><input type="radio" name="question1" value="c"> Option C</label>
-        <label><input type="radio" name="question1" value="d"> Option D</label>
+        <label for="location1">Location 1:</label>
+        <label><input type="radio" name="location1" value="unit-diamond"> Diamond</label>
+        <label><input type="radio" name="location1" value="unit-gyroid"> Gyroid</label>
+        <label><input type="radio" name="location1" value="unit-kelvin"> Kelvin</label>
+        <label><input type="radio" name="location1" value="unit-plate"> Plate</label>
     </div>
     
     <!-- Repeat for questions 2 through 8 -->
 
     <div>
-        <p>Question 2:</p>
-        <label><input type="radio" name="question2" value="a"> Option A</label>
-        <label><input type="radio" name="question2" value="b"> Option B</label>
-        <label><input type="radio" name="question2" value="c"> Option C</label>
-        <label><input type="radio" name="question2" value="d"> Option D</label>
+        <label for="location2">Location 2:</label>
+        <label><input type="radio" name="location2" value="unit-diamond"> Diamond</label>
+        <label><input type="radio" name="location2" value="unit-gyroid"> Gyroid</label>
+        <label><input type="radio" name="location2" value="unit-kelvin"> Kelvin</label>
+        <label><input type="radio" name="location2" value="unit-plate"> Plate</label>
     </div>
 
     <div>
-        <p>Question 3:</p>
-        <label><input type="radio" name="question3" value="a"> Option A</label>
-        <label><input type="radio" name="question3" value="b"> Option B</label>
-        <label><input type="radio" name="question3" value="c"> Option C</label>
-        <label><input type="radio" name="question3" value="d"> Option D</label>
+        <label for="location3">Location 3:</label>
+        <label><input type="radio" name="location3" value="unit-diamond"> Diamond</label>
+        <label><input type="radio" name="location3" value="unit-gyroid"> Gyroid</label>
+        <label><input type="radio" name="location3" value="unit-kelvin"> Kelvin</label>
+        <label><input type="radio" name="location3" value="unit-plate"> Plate</label>
     </div>
 
     <div>
-        <p>Question 4:</p>
-        <label><input type="radio" name="question4" value="a"> Option A</label>
-        <label><input type="radio" name="question4" value="b"> Option B</label>
-        <label><input type="radio" name="question4" value="c"> Option C</label>
-        <label><input type="radio" name="question4" value="d"> Option D</label>
+        <label for="location4">Location 4:</label>
+        <label><input type="radio" name="location4" value="unit-diamond"> Diamond</label>
+        <label><input type="radio" name="location4" value="unit-gyroid"> Gyroid</label>
+        <label><input type="radio" name="location4" value="unit-kelvin"> Kelvin</label>
+        <label><input type="radio" name="location4" value="unit-plate"> Plate</label>
     </div>
 
     <div>
-        <p>Question 5:</p>
-        <label><input type="radio" name="question5" value="a"> Option A</label>
-        <label><input type="radio" name="question5" value="b"> Option B</label>
-        <label><input type="radio" name="question5" value="c"> Option C</label>
-        <label><input type="radio" name="question5" value="d"> Option D</label>
+        <label for="location5">Location 5:</label>
+        <label><input type="radio" name="location5" value="unit-diamond"> Diamond</label>
+        <label><input type="radio" name="location5" value="unit-gyroid"> Gyroid</label>
+        <label><input type="radio" name="location5" value="unit-kelvin"> Kelvin</label>
+        <label><input type="radio" name="location5" value="unit-plate"> Plate</label>
     </div>
 
     <div>
-        <p>Question 6:</p>
-        <label><input type="radio" name="question6" value="a"> Option A</label>
-        <label><input type="radio" name="question6" value="b"> Option B</label>
-        <label><input type="radio" name="question6" value="c"> Option C</label>
-        <label><input type="radio" name="question6" value="d"> Option D</label>
+        <label for="location6">Location 6:</label>
+        <label><input type="radio" name="location6" value="unit-diamond"> Diamond</label>
+        <label><input type="radio" name="location6" value="unit-gyroid"> Gyroid</label>
+        <label><input type="radio" name="location6" value="unit-kelvin"> Kelvin</label>
+        <label><input type="radio" name="location6" value="unit-plate"> Plate</label>
     </div>
 
     <div>
-        <p>Question 7:</p>
-        <label><input type="radio" name="question7" value="a"> Option A</label>
-        <label><input type="radio" name="question7" value="b"> Option B</label>
-        <label><input type="radio" name="question7" value="c"> Option C</label>
-        <label><input type="radio" name="question7" value="d"> Option D</label>
+        <label for="location7">Location 7:</label>
+        <label><input type="radio" name="location7" value="unit-diamond"> Diamond</label>
+        <label><input type="radio" name="location7" value="unit-gyroid"> Gyroid</label>
+        <label><input type="radio" name="location7" value="unit-kelvin"> Kelvin</label>
+        <label><input type="radio" name="location7" value="unit-plate"> Plate</label>
     </div>
 
     <div>
-        <p>Question 8:</p>
-        <label><input type="radio" name="question8" value="a"> Option A</label>
-        <label><input type="radio" name="question8" value="b"> Option B</label>
-        <label><input type="radio" name="question8" value="c"> Option C</label>
-        <label><input type="radio" name="question8" value="d"> Option D</label>
+        <label for="location8">Location 8:</label>
+        <label><input type="radio" name="location8" value="unit-diamond"> Diamond</label>
+        <label><input type="radio" name="location8" value="unit-gyroid"> Gyroid</label>
+        <label><input type="radio" name="location8" value="unit-kelvin"> Kelvin</label>
+        <label><input type="radio" name="location8" value="unit-plate"> Plate</label>
     </div>
 
     <button type="button" id="submitBtn">Submit</button>
 </form>
+
+<p> ------------------------------------------------------------- </p>
+
+<!-- Here set the canvas size  -->
+<canvas id="webgl" width="1440" height="820">
+    Please use a browser that supports "canvas"
+</canvas>
 
 <script id="shader-vs" type="x-shader/x-vertex">
     attribute vec4 a_Position;
