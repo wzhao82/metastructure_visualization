@@ -29,6 +29,14 @@ document.getElementById('submitBtn').addEventListener('click', function() {
     main();
 });
 
+window.shape = "cube";
+function updateShape() {
+    window.shape = document.getElementById('shape').value;
+    main()
+}
+document.getElementById('shape').addEventListener('change', updateShape);
+updateShape();
+
 
 /***************全局变量****************/
 
@@ -322,46 +330,72 @@ function main() {
 
     var x0 = 0.0
     var z0 = 0.0
+    var increment = 0.5
 
-    var filename = './models/' + window.item1 + '.obj';
-    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 0);
-    TextureArray[0]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    updateDrawInfo(0,[0.0,0.0,0.0,  x0,0.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+    if (window.shape == "cube") {
+        // initialize an array of size 8, filled with [0.0,0.0,0.0] for each slot
+        var locations = [
+            [0.5, 0.5, 0.5],
+            [0.5, 0.0, 0.5],
+            [0.5, 0.5, 0.0],
+            [0.5, 0.0, 0.0],
+            [0.0, 0.5, 0.5],
+            [0.0, 0.0, 0.5],
+            [0.0, 0.5, 0.0],
+            [0.0, 0.0, 0.0],
+                        ]
+        for (var i = 0; i < 8; i++) {
+            readOBJFile(`./models/${window[`item${i+1}`]}.obj`, modelObject,  mtlArray, objArray, 0.005, false, i);
+            TextureArray[i]={ifTexture:1.0,TextureUrl:window.textureValue,n:i};
+            updateDrawInfo(i,[0.0,0.0,0.0, locations[i][0],locations[i][1],locations[i][2], 10.0,10.0,10.0, 0.5,0.5,0.5,1,0 ,1]);
+        }
+    } else {
+        for (var i = 0; i < 8; i++) {
+            readOBJFile(`./models/${window[`item${i+1}`]}.obj`, modelObject,  mtlArray, objArray, 0.005, false, i);
+            TextureArray[i]={ifTexture:1.0,TextureUrl:window.textureValue,n:i};
+            updateDrawInfo(i,[0.0,0.0,0.0, x0,0.0+(i*increment),z0, 10.0,10.0,10.0, 0.5,0.5,0.5,1,0 ,1]);
+        }
+    }
 
-    filename = './models/' + window.item2 + '.obj';
-    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 1);//plate
-    TextureArray[1]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    updateDrawInfo(1,[0.0,0.0,0.0,  x0,0.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+    // var filename = './models/' + window.item1 + '.obj';
+    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 0);
+    // TextureArray[0]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    // updateDrawInfo(0,[0.0,0.0,0.0,  x0,0.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    filename = './models/' + window.item3 + '.obj';
-    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 2);
-    TextureArray[2]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    updateDrawInfo(2,[0.0,0.0,0.0,  x0,1.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+    // filename = './models/' + window.item2 + '.obj';
+    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 1);//plate
+    // TextureArray[1]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    // updateDrawInfo(1,[0.0,0.0,0.0,  x0,0.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    filename = './models/' + window.item4 + '.obj';
-    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 3);//plate
-    TextureArray[3]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    updateDrawInfo(3,[0.0,0.0,0.0,  x0,1.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+    // filename = './models/' + window.item3 + '.obj';
+    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 2);
+    // TextureArray[2]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    // updateDrawInfo(2,[0.0,0.0,0.0,  x0,1.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    filename = './models/' + window.item5 + '.obj';
-    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 4);
-    TextureArray[4]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    updateDrawInfo(4,[0.0,0.0,0.0,  x0,2.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+    // filename = './models/' + window.item4 + '.obj';
+    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 3);//plate
+    // TextureArray[3]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    // updateDrawInfo(3,[0.0,0.0,0.0,  x0,1.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    filename = './models/' + window.item6 + '.obj';
-    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 5);
-    TextureArray[5]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    updateDrawInfo(5,[0.0,0.0,0.0,  x0,2.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+    // filename = './models/' + window.item5 + '.obj';
+    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 4);
+    // TextureArray[4]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    // updateDrawInfo(4,[0.0,0.0,0.0,  x0,2.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    filename = './models/' + window.item7 + '.obj';
-    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 6);
-    TextureArray[6]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    updateDrawInfo(6,[0.0,0.0,0.0,  x0,3.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+    // filename = './models/' + window.item6 + '.obj';
+    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 5);
+    // TextureArray[5]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    // updateDrawInfo(5,[0.0,0.0,0.0,  x0,2.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
-    filename = './models/' + window.item8 + '.obj';
-    readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 7);
-    TextureArray[7]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    updateDrawInfo(7,[0.0,0.0,0.0,  x0,3.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+    // filename = './models/' + window.item7 + '.obj';
+    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 6);
+    // TextureArray[6]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    // updateDrawInfo(6,[0.0,0.0,0.0,  x0,3.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
+
+    // filename = './models/' + window.item8 + '.obj';
+    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 7);
+    // TextureArray[7]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
+    // updateDrawInfo(7,[0.0,0.0,0.0,  x0,3.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
 
     initEventHandlers(canvas, configs.angle, gl, viewProjMatrix, model);
 
