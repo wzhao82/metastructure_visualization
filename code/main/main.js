@@ -92,7 +92,7 @@ function updateCanvas(){
 }
 
 // --- texture choice
-window.textureValue = './textTures/metal1.jpg';
+window.textureValue = './textTures/al.jpg';
 function updateTextureValue() {
     var choiceValue = document.getElementById('textureChoice').value;
     window.textureValue = `./textTures/${choiceValue}.jpg`;
