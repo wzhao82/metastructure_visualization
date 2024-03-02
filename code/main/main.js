@@ -1,51 +1,22 @@
 /**
- * Created by Xiaotao.Nie on 6/1/2017. 123
- * All right reserved
- * IF you have any question please email onlythen@yeah.net
+ * Computer Graphics Winter 2024 Final Project
+ * Metastructure Visualization
+ * by Xiangbei Liu, Wenxin Zhao
+ * 
+ * This file is the main code for the project. 
+ * To run, simply open the index.html file in a web browser.
+ * 
+ * Citation: The logic below is modified from Xiaotao.Nie on 6/1/2017.
+ * https://github.com/aircloud/WebGL-obj-loader
  */ 
 
-/***************dom元素****************/
-// Initialize with default value
-window.textureValue = './textTures/metal1.jpg';
-function updateTextureValue() {
-    var choiceValue = document.getElementById('textureChoice').value;
-    window.textureValue = `./textTures/${choiceValue}.jpg`;
-    main()
-}
-document.getElementById('textureChoice').addEventListener('change', updateTextureValue);
-updateTextureValue();
 
-for (let i = 1; i <= 8; i++) {
-    window[`item${i}`] = 'unit-diamond';
-};
-document.getElementById('submitBtn').addEventListener('click', function() {
-    // Loop through each location
-    for (let i = 1; i <= 8; i++) {
-        const selectedOption = document.querySelector(`input[name="location${i}"]:checked`)?.value;
-        if (selectedOption) {
-            window[`item${i}`] = selectedOption;
-        }
-    }
-    main();
-});
-
-window.shape = "cube";
-function updateShape() {
-    window.shape = document.getElementById('shape').value;
-    main()
-}
-document.getElementById('shape').addEventListener('change', updateShape);
-updateShape();
-
-
-/***************全局变量****************/
+/*************** Global Variables ****************/
 
 const SOCKET_URL = "127.0.0.1:3000";
 
 const MAX = 65532;
 const MAX_OBJECT = 24;
-//每一个的临时颜色算法:(Math.ceil(255/MAX_OBJECT))*index
-//返回index:color/(Math.ceil(255/MAX_OBJECT));
 
 const GLOBAL_SCALE = 0.01;
 
@@ -54,7 +25,7 @@ var modelObject = [];
 var mtlArray = [];
 var objArray = [];
 var TextureArray = [];
-var loadTextures = {unload:0};//加载纹理状态锁,0表示没有待加载的纹理，可以绘制了
+var loadTextures = {unload:0};// 0 means all textures are loaded and is ready to draw
 var g_modelMatrix = new Matrix4();
 var g_mvpMatrix = new Matrix4();
 var g_normalMatrix = new Matrix4();
@@ -64,7 +35,7 @@ var configs={
     lightColor:new Float32Array(3),
     backgroundColor:new Uint8Array(4),
     tempColorList:new Float32Array(3*MAX_OBJECT),
-    lightTheme:1,//现在根据场景不同可能有三种主题情况：1表示灯暗的情况,2表示灯比较亮的情况,3表示全部染成单一颜色的情况
+    lightTheme:1,//three themes: 1 - dim light, 2 - bright light, 3 - monochromic light
     angle:[0,0,0],
     lightP:new Float32Array(3),
 };
@@ -81,62 +52,136 @@ var fogDist = new Float32Array([0.5, 19]);
 var If_Fog=0.0;
 var mtlOK=0;
 
-/***************全局函数****************/
 
-//someDrawInfo通过数组的方式表示，这样可以节省一些代码
+/*************** HTML Customization Options ****************/
+
+// Helper function to update the canvas when options are changed
+function updateCanvas(){
+    var x0 = 0.0
+    var y0 = 0.0
+    var z0 = 0.0
+    var increment = 0.5
+
+    if (window.shape == "cube") {
+        // initialize an array of size 8, filled with [0.0,0.0,0.0] for each slot
+        var locations = [
+            [0.5, 0.5, 0.5],
+            [0.5, 0.0, 0.5],
+            [0.5, 0.5, 0.0],
+            [0.5, 0.0, 0.0],
+            [0.0, 0.5, 0.5],
+            [0.0, 0.0, 0.5],
+            [0.0, 0.5, 0.0],
+            [0.0, 0.0, 0.0],
+                        ]
+        for (var i = 0; i < 8; i++) {
+            readOBJFile(`./models/${window[`item${i+1}`]}.obj`, modelObject,  mtlArray, objArray, 0.005, false, i);
+            TextureArray[i]={ifTexture:1.0,TextureUrl:window.textureValue,n:i};
+            updateDrawInfo(i,[0.0,0.0,0.0, locations[i][0],locations[i][1],locations[i][2], 10.0,10.0,10.0, 0.5,0.5,0.5,1,0 ,1]);
+        }
+        configs.lookConfig = [0.5, 0.25, 0.5, 0.5, 0.25, 0.25,  0.0, 1.0, 0];
+    } else {
+        for (var i = 0; i < 8; i++) {
+            readOBJFile(`./models/${window[`item${i+1}`]}.obj`, modelObject,  mtlArray, objArray, 0.005, false, i);
+            TextureArray[i]={ifTexture:1.0,TextureUrl:window.textureValue,n:i};
+            updateDrawInfo(i,[0.0,0.0,0.0, x0,y0,z0+(i*increment), 10.0,10.0,10.0, 0.5,0.5,0.5,1,0 ,1]);
+        }
+        configs.lookConfig = [x0, y0, z0, x0, y0, z0+2,  0.0, 1.0, 0];
+    }
+
+}
+
+// --- texture choice
+window.textureValue = './textTures/metal1.jpg';
+function updateTextureValue() {
+    var choiceValue = document.getElementById('textureChoice').value;
+    window.textureValue = `./textTures/${choiceValue}.jpg`;
+    for (var i = 0; i < 8; i++) {
+        TextureArray[i]={ifTexture:1.0,TextureUrl:window.textureValue,n:i};
+    }
+    main();
+}
+
+document.getElementById('textureChoice').addEventListener('change', updateTextureValue);
+
+// --- metastructure choices
+for (let i = 1; i <= 8; i++) {
+    window[`item${i}`] = 'unit-diamond';
+};
+function updateOption() {
+    // Loop through each location
+    for (let i = 1; i <= 8; i++) {
+        const selectedOption = document.querySelector(`input[name="location${i}"]:checked`)?.value;
+        if (selectedOption) {
+            window[`item${i}`] = selectedOption;
+        }
+    }
+    updateCanvas();
+};
+document.getElementById('submitBtn').addEventListener('click', updateOption);
+
+// --- shape choices
+window.shape = "cube";
+function updateShape() {
+    window.shape = document.getElementById('shape').value;
+    updateCanvas()
+}
+document.getElementById('shape').addEventListener('change', updateShape);
+
+
+
+/*************** Global Functions ****************/
+// use matrix to represent someDrawInfo (reduce code)
 function updateDrawInfo(index,someDrawInfo){
     if(!modelDrawInfo[index])
         modelDrawInfo[index]={};
 
-    //旋转参数
+    // rotate variables
     modelDrawInfo[index].rotateX=someDrawInfo[0];
     modelDrawInfo[index].rotateY=someDrawInfo[1];
     modelDrawInfo[index].rotateZ=someDrawInfo[2];
 
-    //位置参数
+    //location variables
     modelDrawInfo[index].offsetX=someDrawInfo[3];
     modelDrawInfo[index].offsetY=someDrawInfo[4];
     modelDrawInfo[index].offsetZ=someDrawInfo[5];
 
-    //缩放参数
+    //scale variables
     modelDrawInfo[index].scaleX=someDrawInfo[6];
     modelDrawInfo[index].scaleY=someDrawInfo[7];
     modelDrawInfo[index].scaleZ=someDrawInfo[8];
 
-    //自定义颜色参数
+    //color variables
     modelDrawInfo[index].r=someDrawInfo[9];
     modelDrawInfo[index].g=someDrawInfo[10];
     modelDrawInfo[index].b=someDrawInfo[11];
     modelDrawInfo[index].a=someDrawInfo[12];
     modelDrawInfo[index].u_ifCertainColor=someDrawInfo[13];
 
-    //是否隐藏
+    // whether to show
     modelDrawInfo[index].ifShow=someDrawInfo[14];
 
 }
 
 var jjjj = 0;
-//需要绑定this 这里面的this就是对于每一个模型来说总的内容的实例
-//这个函数实际上并没有优化的很好,现在只是相当于列出,但是这种方式比较方便
 function getDrawingInfo(ifTexture) {
     // Create an arrays for vertex coordinates, normals, colors, and indices
     var numIndices = 0;
     for(var i = 0; i < this.objects.length; i++){
         numIndices += this.objects[i].numIndices;
-        //每一个objects[i].numIndices 是它的所有的face的顶点数加起来
     }
     var numVertices = numIndices;
     var vertices = new Float32Array(numVertices * 3);
     var normals = new Float32Array(numVertices * 3);
     var colors = new Float32Array(numVertices * 4);
-    //这个地方的16是不能转化成32的
+    // the 16 here can't be converted to 32
     var indices = new Uint16Array(numIndices);
 
-    //尝试增加贴图
+    // attempt to add texture
     var textureVt = new Float32Array(numVertices * 3);
 
     // Set vertex, normal, texture and color
-    //一个face一个face的遍历
+    // iterate through each face
     var index_indices = 0;
     for(i = 0; i < this.objects.length; i++){
         var object = this.objects[i];
@@ -164,7 +209,7 @@ function getDrawingInfo(ifTexture) {
                     textureVt[index_indices * 3 + 2] = ifTexture;
                 }
                 else{
-                    //有些是没有纹理坐标的,这个时候把纹理坐标置成系统默认值
+                    // some doesn't have texture, so set it to 0 (default value)
                     textureVt[index_indices * 3] = 0;
                     textureVt[index_indices * 3 + 1] = 0;
                     textureVt[index_indices * 3 + 2] = ifTexture;
@@ -198,7 +243,7 @@ function getDrawingInfo(ifTexture) {
 
 var ready = true;
 
-//最多绘制65535个点，这里面的其他内容，都是和indices有倍数关系的，要改变indices的同时也要改变其他的
+// draw at most 65535 points. the other content is all related to indices, so if you want to change indices, you should change the other content at the same time.
 function onReadComplete(gl, model, target,begin,numbers,ifTexture) {
     // Acquire the vertex coordinates and colors from OBJ file
     //console.log("target",target);
@@ -251,6 +296,7 @@ var FSHADER_SOURCE = ShaderSourceFromScript("shader-fs");
 
 
 function main() {
+    console.log("running main");
 
     // Retrieve <canvas> element
     var canvas = document.getElementById('webgl');
@@ -297,7 +343,7 @@ function main() {
 
     if (program.a_Position < 0 ||  program.a_Normal < 0 || program.a_Color < 0 || program.a_TextCord <0 ||
         !program.u_MvpMatrix || !program.u_NormalMatrix) {
-        console.log('attribute, uniform失敗');
+        console.log('attribute, uniform failed');
         return;
     }
 
@@ -308,9 +354,9 @@ function main() {
         return;
     }
 
-    // 投影行列計算
+    // -- view projection matrix
     var viewProjMatrix = new Matrix4();
-    viewProjMatrix.setPerspective(40.0, canvas.width/canvas.height, 1.0, 5000.0);
+    viewProjMatrix.setPerspective(20.0, canvas.width/canvas.height, 1.0, 5000.0);
     viewProjMatrix.lookAt(...(configs.lookConfig));
 
     // Start reading the OBJ file
@@ -323,7 +369,7 @@ function main() {
 //        TextureArray[1]={ifTexture:0.0,TextureUrl:'./textTures/texture1.jpg',n:1};
 //        updateDrawInfo(1,[0.0,0.0,0.0, -20,0.0,-50.0, 1.0,1.0,1.0]);
 
-    //每一个新的模型要改变：第一行最后参数编号，第二行索引，最后编号，第三行索引
+    // every new model should change: the last number in the first line, the index in the second line, the last number in the third line
     // readOBJFile('./models/cube.obj', modelObject,  mtlArray, objArray, 20, false, 0);
     // TextureArray[0]={ifTexture:0.0,TextureUrl:'none',n:0};
     // updateDrawInfo(0,[0.0,90.0,0.0, 0.0,6.0,0.0, 0.75,0.4,0.5,  0.5,0.5,0.5,1,0 ,1]);
@@ -360,53 +406,13 @@ function main() {
         configs.lookConfig = [x0, y0, z0, x0, y0, z0+2,  0.0, 1.0, 0];
     }
 
-    // var filename = './models/' + window.item1 + '.obj';
-    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 0);
-    // TextureArray[0]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    // updateDrawInfo(0,[0.0,0.0,0.0,  x0,0.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
-
-    // filename = './models/' + window.item2 + '.obj';
-    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 1);//plate
-    // TextureArray[1]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    // updateDrawInfo(1,[0.0,0.0,0.0,  x0,0.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
-
-    // filename = './models/' + window.item3 + '.obj';
-    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 2);
-    // TextureArray[2]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    // updateDrawInfo(2,[0.0,0.0,0.0,  x0,1.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
-
-    // filename = './models/' + window.item4 + '.obj';
-    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 3);//plate
-    // TextureArray[3]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    // updateDrawInfo(3,[0.0,0.0,0.0,  x0,1.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
-
-    // filename = './models/' + window.item5 + '.obj';
-    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 4);
-    // TextureArray[4]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    // updateDrawInfo(4,[0.0,0.0,0.0,  x0,2.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
-
-    // filename = './models/' + window.item6 + '.obj';
-    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 5);
-    // TextureArray[5]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    // updateDrawInfo(5,[0.0,0.0,0.0,  x0,2.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
-
-    // filename = './models/' + window.item7 + '.obj';
-    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 6);
-    // TextureArray[6]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    // updateDrawInfo(6,[0.0,0.0,0.0,  x0,3.0,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
-
-    // filename = './models/' + window.item8 + '.obj';
-    // readOBJFile(filename, modelObject,  mtlArray, objArray, 0.005, false, 7);
-    // TextureArray[7]={ifTexture:1.0,TextureUrl:window.textureValue,n:1};
-    // updateDrawInfo(7,[0.0,0.0,0.0,  x0,3.5,z0,  10.0,10.0,10.0,  0.5,0.5,0.5,1,0 ,1]);
-
     initEventHandlers(canvas, configs.angle, gl, viewProjMatrix, model);
 
     var tick = function() {   // Start drawing
         // currentAngle = animate(currentAngle); // Update current rotation angle
         if(loadTextures.unload<=0){
             initDraw(gl);
-            for(var ii=0;ii<modelObject.length;ii++){
+            for(var ii=0;ii<8;ii++){
                 draw(gl, gl.program, configs.angle, viewProjMatrix, model,ii,TextureArray,false);
             }
         }
@@ -422,7 +428,8 @@ function main() {
     }
     initDraw(gl);
     tick();
-
+    
+    
 };
 
 var useFul=[13,14,15,16,17,18,3,19,4];
@@ -464,22 +471,13 @@ function initEventHandlers(canvas, currentAngle, gl, viewProjMatrix, model) {
             var dy = factor * (y - lastY);
 
             currentX+=dx*4;
-            // configs.lookConfig[0]=Math.sin(currentX/circleX) * 10 + configs.lookConfig[0];
-            // configs.lookConfig[2]=Math.cos(currentX/circleX) * 10 + configs.lookConfig[2];
-
+            // update x,y,z here 
             configs.lookConfig[0]=Math.cos(currentX/circleX) * 10 ;
             configs.lookConfig[2]=Math.sin(currentX/circleX) * 10 ;
+            configs.lookConfig[1]+=dy*0.4;   
 
-            configs.lookConfig[1]+=dy*0.4;
-            // configs.lookConfig[0] += dx*0.4;
-            //configs.lookConfig[1] -= dy;
-            // var zFactor = 5 / canvas.height; // Control the sensitivity of z-axis movement, adjust as needed
-            // configs.lookConfig[2] += dy * zFactor;             
-            viewProjMatrix.setPerspective(30.0, canvas.width/canvas.height, 1.0, 5000.0);
+            viewProjMatrix.setPerspective(20.0, canvas.width/canvas.height, 1.0, 5000.0);
             viewProjMatrix.lookAt(...(configs.lookConfig));
-            // // Limit x-axis rotation angle to -90 to 90 degrees
-            // currentAngle[0] = Math.max(Math.min(currentAngle[0] + dy, 90.0), -90.0);
-            // currentAngle[1] = currentAngle[1] + dx;
         }
         lastX = x;
         lastY = y;
